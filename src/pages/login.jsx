@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const login = () => {
 
   const [username, setUsername] = useState('');
   const [password, setpassword] = useState('');
   const [error, seterror] = useState(null);
+  const navigate = useNavigate();
 
   const usernameHandler = (event) => {
     setUsername(event.target.value);
@@ -22,8 +24,9 @@ const login = () => {
 
   const submitHandler = () => {
     if (password.length >= 5) {
-      alert("username :" + username);
+      // alert("username :" + username);
       // alert("password :" + password);
+      navigate('/')
     } else {
       seterror("password must be at least 5 characters")
     }
