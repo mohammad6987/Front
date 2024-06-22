@@ -23,7 +23,7 @@ const login = () => {
   const submitHandler = () => {
     if (password.length >= 5) {
       alert("username :" + username);
-      alert("password :" + password);
+      // alert("password :" + password);
     } else {
       seterror("password must be at least 5 characters")
     }
@@ -37,17 +37,25 @@ const login = () => {
             LOGIN
         </p >
 
-        <label> Username </label>
-        <input type='text' value={username} onChange={usernameHandler}></input>
-        <p>username is : {username}</p>
+        <div>
+          <label> Username </label>
+          <input type='text' value={username} onChange={usernameHandler}></input>
+        </div>
+        {/* <p>username is : {username}</p> */}
 
-        <label> PassWord </label>
-        <input type='password' value={password} onChange={passwordHandler}></input>
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-        <p>password is : {password}</p> 
+        <div style={ { marginTop: 10} }>
+          <label> PassWord </label>
+          <input type='password' value={password} onChange={passwordHandler}></input>
+        </div>
+        <div>
+          {error && <div style={{ color: 'red' }}> {error} </div>} 
+        </div>
+        {/* <p>password is : {password}</p>  */}
 
         
-        <button type='submit'> SUBMIT </button>
+        <div>
+          <button style={ { marginTop: 30} } type='submit'> SUBMIT </button>
+        </div>
       </form>
 
       <button style={ { marginTop: 10} }>
