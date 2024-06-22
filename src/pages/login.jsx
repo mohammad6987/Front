@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const login = () => {
 
@@ -29,24 +30,30 @@ const login = () => {
   }
 
   return(
-    <form onSubmit={submitHandler}>
-      <img src='images.png'></img>
-      <p >
-           LOGIN
-      </p >
+    <>
+      <form onSubmit={submitHandler}>
+        <img style={ { marginTop: 10} } src='images.png'></img>
+        <p >
+            LOGIN
+        </p >
 
-      <label> Username </label>
-      <input type='text' value={username} onChange={usernameHandler}></input>
-      <p>username is : {username}</p>
+        <label> Username </label>
+        <input type='text' value={username} onChange={usernameHandler}></input>
+        <p>username is : {username}</p>
 
-      <label> PassWord </label>
-      <input type='password' value={password} onChange={passwordHandler}></input>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      <p>password is : {password}</p> 
+        <label> PassWord </label>
+        <input type='password' value={password} onChange={passwordHandler}></input>
+        {error && <div style={{ color: 'red' }}>{error}</div>}
+        <p>password is : {password}</p> 
 
-      
-      <button type='submit'> SUBMIT </button>
-    </form>
+        
+        <button type='submit'> SUBMIT </button>
+      </form>
+
+      <button style={ { marginTop: 10} }>
+        <NavLink to="https://www.zoomit.ir/"> Sign Up </NavLink>  
+      </button>
+    </>
   )
 }
 
