@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { FaUser, FaLock } from "react-icons/fa";
+import './login.css';
 
 const login = () => {
 
@@ -33,24 +35,26 @@ const login = () => {
   }
 
   return(
-    <>
+    <div className='wrapper'>
       <form onSubmit={submitHandler}>
-        <img style={ { marginTop: 10} } src='images.png'></img>
-        <p >
+        {/* <img style={ { marginTop: 10} } src='images.png'></img> */}
+        <h1 >
             LOGIN
-        </p >
+        </h1 >
 
-        <div>
+        <div className='input-box'>
           <label> Username </label>
-          <input type='text' value={username} onChange={usernameHandler}></input>
+          <input type='text' placeholder='USERNAME' value={username} onChange={usernameHandler}></input>
+          <FaUser className='icon' />
         </div>
         {/* <p>username is : {username}</p> */}
 
-        <div style={ { marginTop: 10} }>
+        <div className='input-box'>
           <label> PassWord </label>
-          <input type='password' value={password} onChange={passwordHandler}></input>
+          <input type='password' placeholder='PASSWORD' value={password} onChange={passwordHandler}></input>
+          <FaLock className='icon' />
         </div>
-        <div>
+        <div className='forget'>
           {error && <div style={{ color: 'red' }}> {error} </div>} 
         </div>
         {/* <p>password is : {password}</p>  */}
@@ -64,7 +68,7 @@ const login = () => {
       <button style={ { marginTop: 10} }>
         <NavLink to="https://www.zoomit.ir/"> Sign Up </NavLink>  
       </button>
-    </>
+    </div>
   )
 }
 
