@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import '../App.css'
+import './home.css'
 
 const Home = () => {
  
@@ -17,11 +17,13 @@ const Home = () => {
   // }, []);
 
   return (
-    <ul>
-      {users.map( item => (
-        <li>{item.username}</li>
-      ))}
-    </ul>
+    <table className='wrapper'>
+      <ul>
+        {users.map( item => (
+          <li>{item.username}</li>
+        ))}
+      </ul>
+    </table>
   );
 }
 
