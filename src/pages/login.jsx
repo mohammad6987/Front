@@ -19,7 +19,7 @@ const login = () => {
   const passwordHandler = (event) => {
     setpassword(event.target.value);
     if (event.target.value.length < 2) {
-      seterror("password must be at least 2 characters");
+      seterror("Password must be at least 2 characters");
     } else {
       seterror(null);
     }
@@ -44,31 +44,32 @@ const login = () => {
         });
 
         if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const data = await response.text();
-
-        const tokenMatch = data.match(/token value = (API \S+)/);
-        if (tokenMatch) {
-          const extractedToken = tokenMatch[1];
-          setToken(extractedToken);
-          console.log(extractedToken);
-
-          localStorage.setItem('token', extractedToken);
-
-          navigate('/');
+          seterror('User Not Found. ');
         } else {
-          setError('Token not found in response');
-          console.log("error number 2")
+          const data = await response.text();
+          if (data) {
+            setToken(data);
+            console.log(data);
+
+            localStorage.setItem('token', data);
+            seterror(null);
+            
+            if (username == 'admin') {
+              navigate('/home');
+            } else {
+              navigate('/user')
+            }
+          } else {
+            seterror('Token not found in response');
+          }
         }
+
+        
       } catch (error) {
-        console.log('There was a problem with the fetch operation:', error);
-        setError('Login failed. Please try again.');
+        seterror('There was a problem with the fetch operation.');
       }
     } else {
-      setError("Password must be at least 2 characters");
-      console.log("error");
+      seterror("Password must be at least 2 characters");
     }
   }
 
@@ -91,17 +92,20 @@ const login = () => {
           <FaLock className='icon' />
         </div>
 
-        <div className='forget'>
-          {error && <div style={{ color: 'red', fontFamily: 'sans-serif' }}> {error} </div>} 
-        </div>
+        {error && (
+          <div className='error-message' style={{ color: 'red', fontFamily: 'sans-serif', marginBottom: '10px' }}>
+            {error}
+          </div>
+        )}
         
         <div>
           <button style={ { marginTop: 30} } type='submit'> SUBMIT </button>
         </div>
       </form>
-
+      
+      
       <button style={ { marginTop: 10} }>
-        <NavLink to="https://www.zoomit.ir/"> Sign Up </NavLink>  
+        <NavLink to="/SignUp"> Don't have an account? </NavLink>  
       </button>
     
     </div>

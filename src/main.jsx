@@ -4,12 +4,17 @@ import App from './App.jsx'
 import './index.css'
 import Home from './pages/home.jsx'
 import Login from './pages/login.jsx'
+import User from './pages/User.jsx'
+import SignUp from './pages/signup.jsx'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+
 
 const router = createBrowserRouter(
   [
-    {path : '/', element :  <Home/> },
+    {path : '/home', element :  <Home/> },
     {path : '/login', element :  <Login/> },
+    {path : '/user', element : <User/> },
+    {path : '/signUp', element : <SignUp/> },
     
   ]
 );
