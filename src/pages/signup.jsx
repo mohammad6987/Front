@@ -8,6 +8,7 @@ const SignUp = () => {
 
   const [username, setUsername] = useState('');
   const [password, setpassword] = useState('');
+  const [data, setData] = useState(null);
   const [error, seterror] = useState(null);
   const navigate = useNavigate();
 
@@ -44,11 +45,12 @@ const SignUp = () => {
 
         if (!response.ok) {
           seterror('Connection Error. ');
+        } else {
+          const data = await response.text();  
+          console.log(data);
+          setData("SignUp Successful. Wait for authentication. ");
+          seterror(null);
         }
-
-        const data = await response.text();  
-        console.log(data);
-        seterror(null);  
         
       } catch (error) {
         seterror('There was a problem with the fetch operation.');
@@ -64,6 +66,9 @@ const SignUp = () => {
         <h1 >
             Sign Up
         </h1 >
+        <div className='error-message'>
+          {data}
+        </div>
 
         <div className='input-box'>
           <label> Username </label>

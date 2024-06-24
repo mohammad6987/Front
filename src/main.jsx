@@ -2,20 +2,19 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import Home from './pages/home.jsx'
+import AdminHome from './pages/AdminHome.jsx'
 import Login from './pages/login.jsx'
-import User from './pages/User.jsx'
 import SignUp from './pages/signup.jsx'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import UserHome from './pages/UserHome.jsx'
 
 
 const router = createBrowserRouter(
   [
-    {path : '/home', element :  <Home/> },
+    {path : '/Adminhome', element :  <AdminHome/> },
     {path : '/login', element :  <Login/> },
-    {path : '/user', element : <User/> },
+    {path : '/userhome', element : <UserHome/> },
     {path : '/signUp', element : <SignUp/> },
-    
   ]
 );
 ReactDOM.createRoot(document.getElementById('root')).render(

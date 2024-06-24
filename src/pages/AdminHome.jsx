@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './home.css';
 
-const Home = () => {
+const AdminHome = () => {
 
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -45,22 +45,15 @@ const Home = () => {
         {error}
       </div>
     );
+  } else {
+    return (
+      <div>
+        {data}
+      </div>
+    )
   }
 
-  return (
-    <div className="wrapper">
-      {/* <ol>
-        {data.map((user, index) => (
-          <li key={index}>
-            <strong>Username:</strong> {user.username}, 
-            <strong> Auth:</strong> {user.auth ? 'true' : 'false'}, 
-            <strong> Register Date:</strong> {user.registerDate}
-          </li>
-        ))}
-      </ol> */}
-      {data}
-    </div>
-  );
+
 }
 
-export default Home;
+export default AdminHome;

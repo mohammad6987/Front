@@ -55,16 +55,15 @@ const login = () => {
             seterror(null);
             
             if (username == 'admin') {
-              navigate('/home');
+              navigate('/Adminhome');
             } else {
-              navigate('/user')
+              navigate('/userhome');
             }
           } else {
             seterror('Token not found in response');
           }
         }
-
-        
+ 
       } catch (error) {
         seterror('There was a problem with the fetch operation.');
       }
