@@ -48,7 +48,7 @@ const DataTableRow = (props) => {
       <td>{props.username}</td>
       <td>{props.SignDate}</td>
       <td>
-        <button type="button" class="btn btn-outline-primary" onClick={buttonHandler}>{status}</button>
+        <button type="button" class="btn btn-outline-primary" onClick={buttonHandler}> {status} </button>
       </td>
     </tr>
   );
