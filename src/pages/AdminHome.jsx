@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './home.css';
+import DataTableRow from './DataTableRow';
 
 const AdminHome = () => {
 
@@ -45,13 +46,37 @@ const AdminHome = () => {
         {error}
       </div>
     );
-  } else {
-    return (
-      <div>
-        {data}
-      </div>
-    )
   }
+
+  if (!data) {
+    return <div className="wrapper">Loading...</div>;
+  }
+
+  return(
+      
+    <table align='center' border='1' className='wrapper'>
+      <tr>
+        <th>
+          id
+        </th>
+
+        <th>
+          username
+        </th>
+
+        <th>
+          SignDate
+        </th>
+
+        <th>
+          Status
+        </th>
+      </tr>
+
+        {data.map(item => <DataTableRow id={item.id} username={item.username} SignDate={item.registerDate} button={item.authorized}></DataTableRow>)}
+
+    </table>
+  );
 
 
 }
