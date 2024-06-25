@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import './login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import ExpireToken from "./ExpireToken";
 
 
 const UserHome = () => {
@@ -10,9 +10,14 @@ const UserHome = () => {
   const [error, setError] = useState(null);
   const [tokenList, setTokenList] = useState(null);
   const [Expire, setExpire] = useState('Expire');
+  
+
+  const newToken = () => {
+
+  }
 
   const expHandler = () => {
-    setExpire('Expired')
+    setExpire('Expired');
   }
 
   useEffect(() => {
@@ -52,6 +57,9 @@ const UserHome = () => {
   } else {
     return (
       <div className="wrapper">
+        <div>
+          <button type="button" class="btn btn-outline-primary" onClick={newToken}> New API Token </button>
+        </div>
         <table className="table table-striped-columns">
           <thead>
             <tr>
@@ -59,17 +67,25 @@ const UserHome = () => {
               <th> Token Name </th>
               <th> Expiration Time </th>
               <th> Expire Button </th>
+              <th> Set as Main </th>
             </tr>
           </thead>
 
           <tbody>
-            {tokenList.map(item => 
+            {/* {tokenList.map(item => 
               <tr>
                 <td> {item.name} </td>
                 <td> {item.expireDate} </td>
                 <td> <button className="btn btn-outline-danger" onClick={expHandler}> {Expire} </button> </td>
               </tr>
-            )}
+            )} */}
+            {tokenList.map(item => 
+            <ExpireToken
+              name={item.name} 
+              expireDate={item.expireDate} 
+              Maintoken={item.tokenValue}
+            />
+          )}
           </tbody>
         </table>
       </div>
