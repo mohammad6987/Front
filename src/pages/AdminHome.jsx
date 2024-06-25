@@ -53,7 +53,7 @@ const AdminHome = () => {
 
   return (
     <div className="wrapper">
-      <table align='center' border='1'>
+      <table className='table table-striped-columns'>
         <thead>
           <tr>
             <th>id</th>
@@ -92,8 +92,8 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
   }
 
   return (
-    <nav>
-      <ul className='pagination'>
+    <nav aria-label="Page navigation example">
+      <ul className="pagination justify-content-center">
         {pageNumbers.map(number => (
           <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`}>
             <a onClick={() => paginate(number)} href='#' className='page-link'>
