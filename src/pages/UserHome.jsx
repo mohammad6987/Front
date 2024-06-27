@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ExpireToken from "./ExpireToken";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const UserHome = () => {
 
@@ -12,7 +13,7 @@ const UserHome = () => {
   const [TokenName, setTokenName] = useState('');
   const [ExpireDate, setExpireDate] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(2);
+  const [itemsPerPage] = useState(4);
   const navigate = useNavigate();
   const token = localStorage.getItem('userToken');
 
@@ -52,17 +53,17 @@ const UserHome = () => {
 
   const NewToken = async (event) => {
     event.preventDefault();
+
     console.log(ExpireDate);
     console.log(TokenName);
     console.log(token);
-
-    try {
-      
-      const body = {
+    
+    const body = {
         name: TokenName,
         date: ExpireDate
-      };
+    };
 
+    try {
       const response = await fetch("http://localhost:8080/user/api-tokens", {
         method: 'POST',
         headers: {
@@ -72,8 +73,8 @@ const UserHome = () => {
       });
 
       if (response.ok) {
-        const responseText = await response.text();
-        console.log(responseText);
+        // const responseText = await response.text();
+        // console.log(response);
       } else {
         setError('error in sending data');
       }
@@ -134,8 +135,8 @@ const UserHome = () => {
             <thead>
               <tr>
                 <th>Token Name</th>
-                <th>Expiration Time</th>
-                <th>Expire Button</th>
+                <th>Expiration</th>
+                <th>Expire</th>
                 
               </tr>
             </thead>

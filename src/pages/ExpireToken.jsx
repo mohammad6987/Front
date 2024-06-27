@@ -5,20 +5,49 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ExpireToken = (props) => {
 
-  let token = localStorage.getItem('token');
+  // const token = localStorage.getItem('userToken');
   const [error, setError] = useState(null);
   const [Expire, setExpire] = useState('Expire');
-  
+  const name = props.name;
+  const tokenValue = props.Maintoken;
+
+  const updateStatus = async () => {
+    
+    console.log(name);
+    console.log(tokenValue);
+    const token = localStorage.getItem('userToken');  
+    console.log(token);
+    
+    const url = `http://localhost:8080/user/api-tokens`;
+    const body = {
+      name: name,
+      tokenValue: tokenValue
+    }
+
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': token
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (response.ok) {
+        setExpire("Expired Final")
+      } else {
+        setError(`Failed`);
+      }
+    } catch (error) {
+      setError(`Error fetching`);
+      console.log(error);
+    }
+  };
+
   const ExpireHandler = () => {
-
-  }
-
-  const SetMain = () => {
-    localStorage.setItem('token', props.Maintoken);
-    alert("Main token has been set successfuly. ");
-    token = localStorage.getItem('userToken');
-  }
-
+    setExpire('Expired');
+    updateStatus();
+  };
   return (
     <tr>
       <td>{props.name}</td>
