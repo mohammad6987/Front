@@ -57,6 +57,7 @@ const UserHome = () => {
     console.log(token);
 
     try {
+      
       const body = {
         name: TokenName,
         date: ExpireDate
@@ -71,8 +72,8 @@ const UserHome = () => {
       });
 
       if (response.ok) {
-        // fetchTokens();
-        console.log(response.text());
+        const responseText = await response.text();
+        console.log(responseText);
       } else {
         setError('error in sending data');
       }
