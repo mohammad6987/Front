@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ExpireToken = (props) => {
 
-  // const token = localStorage.getItem('userToken');
   const [error, setError] = useState(null);
   const [Expire, setExpire] = useState('Expire');
   const name = props.name;
@@ -13,10 +12,7 @@ const ExpireToken = (props) => {
 
   const updateStatus = async () => {
     
-    console.log(name);
-    console.log(tokenValue);
-    const token = localStorage.getItem('userToken');  
-    console.log(token);
+    const token = localStorage.getItem('userToken');
     
     const url = `http://localhost:8080/user/api-tokens`;
     const body = {
@@ -28,19 +24,19 @@ const ExpireToken = (props) => {
       const response = await fetch(url, {
         method: 'DELETE',
         headers: {
-          'Authorization': token
+          'Authorization': token,
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
       });
 
       if (response.ok) {
-        setExpire("Expired Final")
+        setExpire("Expired")
       } else {
         setError(`Failed`);
       }
     } catch (error) {
       setError(`Error fetching`);
-      console.log(error);
     }
   };
 

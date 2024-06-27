@@ -17,69 +17,65 @@ const UserHome = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('userToken');
 
-  useEffect(() => {
+  const fetchTokens = async () => {
+    const isAuthorized = localStorage.getItem('user');
 
-    const fetchTokens = async () => {
-      const isAuthorized = localStorage.getItem('user');
-
-      if (isAuthorized !== 'true' || !token) {
-        navigate('/login');
-      } else {
-        try {
-          const response = await fetch('http://localhost:8080/user/api-tokens', {
-            method: 'GET',
-            headers: {
-              'Authorization': token,
-              'Content-Type': 'application/json'
-            }
-          });
-  
-          if (response.ok) {
-            const data = await response.json();
-            setTokenList(data);
-            // console.log(data);
-          } else {
-            setError(`Failed to fetch tokens:`);
+    if (isAuthorized !== 'true' || !token) {
+      navigate('/login');
+    } else {
+      try {
+        const response = await fetch('http://localhost:8080/user/api-tokens', {
+          method: 'GET',
+          headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json'
           }
-        } catch (error) {
-          setError(`Connection Error : ${error.message}`);
-          // console.log(error);
-        }
-      }
-    };
+        });
 
+        if (response.ok) {
+          const data = await response.json();
+          setTokenList(data);
+        } else {
+          setError(`Failed to fetch tokens:`);
+        }
+      } catch (error) {
+        setError(`Connection Error : ${error.message}`);
+      }
+    }
+  };
+
+  useEffect(() => {
     fetchTokens();
   }, [navigate]);
 
   const NewToken = async (event) => {
     event.preventDefault();
 
-    console.log(ExpireDate);
-    console.log(TokenName);
-    console.log(token);
-    
     const body = {
-        name: TokenName,
-        date: ExpireDate
+      name: TokenName,
+      date: ExpireDate
     };
 
     try {
       const response = await fetch("http://localhost:8080/user/api-tokens", {
         method: 'POST',
         headers: {
-          'Authorization': token
+          'Authorization': token,
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
       });
 
       if (response.ok) {
-        // const responseText = await response.text();
-        // console.log(response);
+        alert("New API Token Generated.");
+        setTokenName('');
+        setExpireDate('');
+        fetchTokens();
       } else {
-        setError('error in sending data');
+        setError('Error in sending data');
       }
     } catch {
-      setError("Connection Error. ");
+      setError("Connection Error.");
     }
   }
 
@@ -137,7 +133,6 @@ const UserHome = () => {
                 <th>Token Name</th>
                 <th>Expiration</th>
                 <th>Expire</th>
-                
               </tr>
             </thead>
 
@@ -164,7 +159,6 @@ const UserHome = () => {
     </div>
   );
 }
-
 
 const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
   const pageNumbers = [];
