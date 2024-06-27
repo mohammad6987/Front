@@ -6,19 +6,20 @@ import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const UserHome = () => {
+
   const [error, setError] = useState(null);
-  const [tokenList, setTokenList] = useState(null);
+  const [tokenList, setTokenList] = useState([]);
   const [TokenName, setTokenName] = useState('');
   const [ExpireDate, setExpireDate] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(2);
   const navigate = useNavigate();
+  const token = localStorage.getItem('userToken');
 
   useEffect(() => {
 
     const fetchTokens = async () => {
       const isAuthorized = localStorage.getItem('user');
-      const token = localStorage.getItem('userToken');
 
       if (isAuthorized !== 'true' || !token) {
         navigate('/login');
@@ -44,15 +45,40 @@ const UserHome = () => {
           // console.log(error);
         }
       }
-
-
     };
 
     fetchTokens();
   }, [navigate]);
 
-  const NewToken = (event) => {
+  const NewToken = async (event) => {
     event.preventDefault();
+    console.log(ExpireDate);
+    console.log(TokenName);
+    console.log(token);
+
+    try {
+      const body = {
+        name: TokenName,
+        date: ExpireDate
+      };
+
+      const response = await fetch("http://localhost:8080/user/api-tokens", {
+        method: 'POST',
+        headers: {
+          'Authorization': token
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (response.ok) {
+        // fetchTokens();
+        console.log(response.text());
+      } else {
+        setError('error in sending data');
+      }
+    } catch {
+      setError("Connection Error. ");
+    }
   }
 
   const TokenNameHandler = (event) => {
@@ -91,7 +117,7 @@ const UserHome = () => {
             </div>
 
             <div className='input-box'>
-              <label>Expire Date</label>
+              <label> Expire Date </label>
               <input type='text' placeholder='Expire Date' value={ExpireDate} onChange={DateHandler} />
               <FaLock className='icon' />
             </div>
