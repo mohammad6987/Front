@@ -16,7 +16,7 @@ const ExpireToken = (props) => {
   const SetMain = () => {
     localStorage.setItem('token', props.Maintoken);
     alert("Main token has been set successfuly. ");
-    token = localStorage.getItem('token');
+    token = localStorage.getItem('userToken');
   }
 
   return (

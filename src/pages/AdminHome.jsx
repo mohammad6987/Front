@@ -2,40 +2,47 @@ import React, { useState, useEffect } from 'react';
 import './home.css';
 import DataTableRow from './DataTableRow';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { useNavigate } from 'react-router-dom';
 
 const AdminHome = () => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5); 
-  const token = localStorage.getItem('token');
-
+  const [itemsPerPage] = useState(5);
+  const navigate = useNavigate();
+  
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/admin/getAllUsers', {
-          method: 'GET',
-          headers: {
-            'Authorization': token
-          }
-        });
 
-        if (response.ok) {
-          const data = await response.json();
-          setData(data);
-          console.log(data);
-        } else {
-          setError(`Failed to fetch users:`);
+    const fetchUsers = async () => {
+      const isAuthorized = localStorage.getItem('admin');
+      const token = localStorage.getItem('adminToken');
+      // console.log(token);
+
+      if (isAuthorized !== 'true' || !token) {
+        navigate('/login');
+      } else {
+        try {
+          const response = await fetch('http://localhost:8080/admin/getAllUsers', {
+            method: 'GET',
+            headers: {
+              'Authorization': token
+            }
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            setData(data);
+          } else {
+            setError(`Failed to fetch users:`);
+          }
+        } catch (error) {
+          setError(`Connection Error : ${error.message}`);
         }
-      } catch (error) {
-        setError(`Error fetching users: ${error.message}`);
-        console.log(error);
       }
-    };
+    }
 
     fetchUsers();
-  }, []);
+  }, [navigate]);
 
   if (error) {
     return <div className="wrapper">{error}</div>;

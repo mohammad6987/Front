@@ -1,27 +1,29 @@
-import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FaUser, FaLock } from "react-icons/fa";
 import './login.css';
 
-const login = () => {
-
+const Login = () => {
+  localStorage.clear();
   const [username, setUsername] = useState('');
-  const [password, setpassword] = useState('');
-  const [error, seterror] = useState(null);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const [token, setToken] = useState(null);
 
   const usernameHandler = (event) => {
     setUsername(event.target.value);
   }
 
+  const accountHandler = () => {
+    navigate('/SignUp');
+  }
+
   const passwordHandler = (event) => {
-    setpassword(event.target.value);
+    setPassword(event.target.value);
     if (event.target.value.length < 2) {
-      seterror("Password must be at least 2 characters");
+      setError("Password must be at least 2 characters");
     } else {
-      seterror(null);
+      setError(null);
     }
   }
 
@@ -44,50 +46,47 @@ const login = () => {
         });
 
         if (!response.ok) {
-          seterror('User Not Found. ');
+          setError('User Not Found. ');
         } else {
           const data = await response.text();
           if (data) {
-            setToken(data);
-            console.log(data);
-
-            localStorage.setItem('token', data);
-            seterror(null);
-            
-            if (username == 'admin') {
+            setError(null);
+            if (username === 'admin') {
+              localStorage.setItem('adminToken', data);
+              localStorage.setItem('admin', 'true');
               navigate('/Adminhome');
             } else {
+              localStorage.setItem('userToken', data);
+              localStorage.setItem('user', 'true');
               navigate('/userhome');
             }
           } else {
-            seterror('Token not found in response');
+            setError('Token not found in response');
           }
         }
  
       } catch (error) {
-        seterror('There was a problem with the fetch operation.');
+        setError('There was a problem with the fetch operation.');
       }
     } else {
-      seterror("Password must be at least 2 characters");
+      setError("Password must be at least 2 characters");
     }
   }
 
   return(
     <div className='wrapper'>
       <form onSubmit={submitHandler}>
-        <h1 >
-            LOGIN
-        </h1 >
+        <h1>LOGIN</h1>
 
         <div className='input-box'>
-          <label> Username </label>
-          <input type='text' placeholder='USERNAME' value={username} onChange={usernameHandler}></input>
+          <label>Username</label>
+          <input type='text' placeholder='USERNAME' value={username} onChange={usernameHandler} />
           <FaUser className='icon' />
         </div>
 
         <div className='input-box'>
-          <label> PassWord </label>
-          <input type='password' placeholder='PASSWORD' value={password} onChange={passwordHandler}></input>
+          <label>Password</label>
+          <input type='password' placeholder='PASSWORD' value={password} onChange={passwordHandler} />
           <FaLock className='icon' />
         </div>
 
@@ -98,18 +97,15 @@ const login = () => {
         )}
         
         <div>
-          <button style={ { marginTop: 30} } type='submit'> SUBMIT </button>
+          <button style={{ marginTop: 30 }} type='submit'>SUBMIT</button>
         </div>
       </form>
       
-      
-      <button style={ { marginTop: 10} }>
-        <NavLink to="/SignUp"> Don't have an account? </NavLink>  
+      <button onClick={accountHandler} style={{ marginTop: 10 }}>
+        Don't have an account?
       </button>
-    
     </div>
   );
 }
 
-
-export default login;
+export default Login;

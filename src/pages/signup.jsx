@@ -16,6 +16,10 @@ const SignUp = () => {
     setUsername(event.target.value);
   }
 
+  const accountHandler = () => {
+    navigate('/login');
+  }
+
   const passwordHandler = (event) => {
     setpassword(event.target.value);
     if (event.target.value.length < 2) {
@@ -94,8 +98,8 @@ const SignUp = () => {
       </form>
       
       
-      <button style={ { marginTop: 10} }>
-        <NavLink to="/login"> Already have an account? </NavLink>  
+      <button onClick={accountHandler} style={ { marginTop: 10} }>
+        Already have an account?
       </button>
     
     </div>

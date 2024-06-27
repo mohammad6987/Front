@@ -6,7 +6,7 @@ const DataTableRow = (props) => {
   const [error, setError] = useState(null);
 
   const updateStatus = async (newStatus) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('adminToken');
     const username = props.username;
     const url = `http://localhost:8080/admin/username=${username}&active=${newStatus}`;
 
@@ -19,9 +19,8 @@ const DataTableRow = (props) => {
       });
 
       if (response.ok) {
-        // const data = await response.json();
         setStatus(String(newStatus));
-        console.log(status);
+        // console.log(status);
       } else {
         setError(`Failed`);
       }
@@ -32,7 +31,6 @@ const DataTableRow = (props) => {
   };
 
   const buttonHandler = () => {
-    // const newStatus = status;
     let newStatus = null;
     if (status == "true") {
       newStatus = "false";
@@ -48,7 +46,7 @@ const DataTableRow = (props) => {
       <td>{props.username}</td>
       <td>{props.SignDate}</td>
       <td>
-        <button type="button" class="btn btn-outline-primary" onClick={buttonHandler}> {status} </button>
+        <button type="button" className="btn btn-outline-primary" onClick={buttonHandler}> {status} </button>
       </td>
     </tr>
   );
