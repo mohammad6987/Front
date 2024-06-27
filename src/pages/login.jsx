@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaUser, FaLock, FaAlignCenter } from "react-icons/fa";
 import './login.css';
 
 const Login = () => {
@@ -66,7 +66,7 @@ const Login = () => {
         }
  
       } catch (error) {
-        setError('There was a problem with the fetch operation.');
+        setError('problem with the fetch operation.');
       }
     } else {
       setError("Password must be at least 2 characters");
@@ -91,7 +91,7 @@ const Login = () => {
         </div>
 
         {error && (
-          <div className='error-message' style={{ color: 'red', fontFamily: 'sans-serif', marginBottom: '10px' }}>
+          <div style={{ color: 'red', fontFamily: 'sans-serif', marginBottom: '10px', marginLeft: '15px' }}>
             {error}
           </div>
         )}
