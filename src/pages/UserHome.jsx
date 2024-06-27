@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import './login.css';
+import './home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ExpireToken from "./ExpireToken";
 import { FaUser, FaLock } from "react-icons/fa";
@@ -10,6 +10,8 @@ const UserHome = () => {
   const [tokenList, setTokenList] = useState(null);
   const [TokenName, setTokenName] = useState('');
   const [ExpireDate, setExpireDate] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(2);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,52 +71,92 @@ const UserHome = () => {
     return <div className="wrapper">Loading...</div>;
   }
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = tokenList.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
-    <div className="wrapper">
-      <div className="wrapper">
-        <form onSubmit={NewToken}>
-          <h1>New Token</h1>
+    <div className="wrapper1">
+      <div className="content-container">
+        <div className="form-container">
+          <form onSubmit={NewToken}>
+            <h1>New Token</h1>
 
-          <div className='input-box'>
-            <label>Token name</label>
-            <input type='text' placeholder='Token Name' value={TokenName} onChange={TokenNameHandler} />
-            <FaUser className='icon' />
-          </div>
+            <div className='input-box'>
+              <label>Token name</label>
+              <input type='text' placeholder='Token Name' value={TokenName} onChange={TokenNameHandler} />
+              <FaUser className='icon' />
+            </div>
 
-          <div className='input-box'>
-            <label>Expire Date</label>
-            <input type='text' placeholder='Expire Date' value={ExpireDate} onChange={DateHandler} />
-            <FaLock className='icon' />
-          </div>
+            <div className='input-box'>
+              <label>Expire Date</label>
+              <input type='text' placeholder='Expire Date' value={ExpireDate} onChange={DateHandler} />
+              <FaLock className='icon' />
+            </div>
 
-          <div>
-            <button style={{ marginTop: 30 }} type='submit'>Create Token</button>
-          </div>
-        </form>
+            <div>
+              <button style={{ marginTop: 30 }} type='submit'>Create Token</button>
+            </div>
+          </form>
+        </div>
+        
+        <div className="table-container">
+          <table className="table table-striped-columns">
+            <thead>
+              <tr>
+                <th>Token Name</th>
+                <th>Expiration Time</th>
+                <th>Expire Button</th>
+                
+              </tr>
+            </thead>
+
+            <tbody>
+              {currentItems.map((item, index) => 
+                <ExpireToken
+                  key={index}
+                  name={item.name} 
+                  expireDate={item.expireDate} 
+                  Maintoken={item.tokenValue}
+                />
+              )}
+            </tbody>
+          </table>
+          
+          <Pagination 
+            itemsPerPage={itemsPerPage} 
+            totalItems={tokenList.length} 
+            paginate={paginate}
+            currentPage={currentPage}
+          />
+        </div>
       </div>
-
-      <table className="table table-striped-columns">
-        <thead>
-          <tr>
-            <th>Token Name</th>
-            <th>Expiration Time</th>
-            <th>Expire Button</th>
-            <th>Set as Main</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {tokenList.map((item, index) => 
-            <ExpireToken
-              key={index}
-              name={item.name} 
-              expireDate={item.expireDate} 
-              Maintoken={item.tokenValue}
-            />
-          )}
-        </tbody>
-      </table>
     </div>
+  );
+}
+
+
+const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
+  const pageNumbers = [];
+
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  return (
+    <nav aria-label="Page navigation example">
+      <ul className="pagination justify-content-center">
+        {pageNumbers.map(number => (
+          <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`}>
+            <a onClick={() => paginate(number)} href='#' className='page-link'>
+              {number}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
 

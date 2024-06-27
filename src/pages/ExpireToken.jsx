@@ -26,9 +26,7 @@ const ExpireToken = (props) => {
       <td>
         <button type="button" className="btn btn-outline-danger" onClick={ExpireHandler} > {Expire} </button>
       </td>
-      <td>
-        <button type="button" className="btn btn-outline-success" onClick={SetMain}> MainToken </button>
-      </td>
+      
     </tr>
   );
 }
