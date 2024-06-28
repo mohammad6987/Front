@@ -34,7 +34,7 @@ const UserHome = () => {
 
         if (response.ok) {
           const data = await response.json();
-          setTokenList(data);
+          setTokenList(Array.isArray(data) ? data : []);
         } else {
           setError(`Failed to fetch tokens:`);
         }
@@ -91,14 +91,13 @@ const UserHome = () => {
     return <div className="wrapper">{error}</div>;
   }
 
-  if (!tokenList) {
+  if (tokenList == []) {
     return <div className="wrapper">Loading...</div>;
   }
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = tokenList.slice(indexOfFirstItem, indexOfLastItem);
-
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
