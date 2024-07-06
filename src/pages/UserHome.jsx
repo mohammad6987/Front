@@ -46,7 +46,7 @@ const UserHome = () => {
 
   useEffect(() => {
     fetchTokens();
-  }, [navigate]);
+  }, [navigate, currentPage]);
 
   const NewToken = async (event) => {
     event.preventDefault();

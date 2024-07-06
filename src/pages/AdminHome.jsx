@@ -42,7 +42,7 @@ const AdminHome = () => {
     }
 
     fetchUsers();
-  }, [navigate]);
+  }, [navigate, currentPage]);
 
   if (error) {
     return <div className="wrapper">{error}</div>;
