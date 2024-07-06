@@ -131,18 +131,3 @@ table tr:last-child td:first-child {
 table tr:last-child td:last-child {
   border-bottom-right-radius: 20px;
 }
-/* 
-.pagination {
-  margin-top: 20px;
-  justify-content: center;
-}
-
-.page-link {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  border: none;
-}
-
-.page-item.active .page-link {
-  background: rgba(255, 255, 255, 0.4);
-} */

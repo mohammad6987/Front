@@ -20,13 +20,11 @@ const DataTableRow = (props) => {
 
       if (response.ok) {
         setStatus(String(newStatus));
-        // console.log(status);
       } else {
         setError(`Failed`);
       }
     } catch (error) {
       setError(`Error fetching`);
-      console.log(error);
     }
   };
 
@@ -40,6 +38,12 @@ const DataTableRow = (props) => {
     updateStatus(newStatus);
   };
 
+  if (error) {
+    return (
+      <div> {error} </div>
+    );
+  }
+  
   return (
     <tr>
       <td>{props.id}</td>

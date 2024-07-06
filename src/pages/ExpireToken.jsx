@@ -44,6 +44,13 @@ const ExpireToken = (props) => {
     setExpire('Expired');
     updateStatus();
   };
+
+  if (error) {
+    return (
+      <div> {error} </div>
+    );
+  }
+
   return (
     <tr>
       <td>{props.name}</td>

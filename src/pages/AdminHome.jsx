@@ -16,7 +16,6 @@ const AdminHome = () => {
     const fetchUsers = async () => {
       const isAuthorized = localStorage.getItem('admin');
       const token = localStorage.getItem('adminToken');
-      // console.log(token);
 
       if (isAuthorized !== 'true' || !token) {
         navigate('/login');

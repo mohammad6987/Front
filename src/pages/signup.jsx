@@ -51,7 +51,6 @@ const SignUp = () => {
           seterror('Connection Error. ');
         } else {
           const data = await response.text();  
-          console.log(data);
           setData("SignUp Successful. Wait for authentication. ");
           seterror(null);
         }
